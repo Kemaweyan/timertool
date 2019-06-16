@@ -1,4 +1,5 @@
 import time
+from functools import wraps
 
 __all__ = ('timer')
 
@@ -33,3 +34,14 @@ class _timer:
 
 def timer():
     return _timer()
+
+
+def timelog(function):
+    @wraps(function)
+    def wrapper(*args, **kwargs):
+        try:
+            with timer() as t:
+                return function(*args, **kwargs)
+        finally:
+            print("{}: {} sec".format(function.__name__, t.time))
+    return wrapper

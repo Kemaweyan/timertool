@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from unittest import main, TestCase, mock
+from io import StringIO
 
 from timertool import _timer
 
@@ -119,6 +120,18 @@ class TestTimerIntegration(TestCase):
         with _timer.timer() as t:
             self.assertEqual(t.time, 6)
         self.assertEqual(t.time, 16)
+
+
+class TestTimerlog(TestCase):
+    @mock.patch('sys.stdout', new_callable=StringIO)
+    @mock.patch('time.time', side_effect=[15, 18])
+    def test_decorator(self, mock_time, mock_stdout):
+        mock_func = mock.MagicMock(__name__='foo')
+        decorated_func = _timer.timelog(mock_func)
+        result = decorated_func('foo', bar='baz')
+        mock_func.assert_called_with('foo', bar='baz')
+        self.assertEqual(result, mock_func.return_value)
+        self.assertEqual("foo: 3 sec\n", mock_stdout.getvalue())
 
 
 if __name__ == "__main__":
