@@ -1,7 +1,7 @@
 import time
 from functools import wraps
 
-__all__ = ('timer')
+__all__ = ('timer', 'timelog')
 
 class _timer:
 

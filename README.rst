@@ -35,7 +35,7 @@ the time currently elapsed from the ``start`` call:
     t.time  # contains the currently elapsed time
     ...
 
-The ``timertool`` also supports a content managersyntax:
+The ``timertool`` also supports a content manager syntax:
 
 .. code-block::
 
@@ -43,3 +43,16 @@ The ``timertool`` also supports a content managersyntax:
         ...
         t.time  # contains the currently elapsed time
     t.time  # contains the total elapsed time
+
+The ``timertool`` contains a ``timelog`` decorator that logs to stdout
+the time of function executin:
+
+.. code-block::
+
+    from timertool import timelog
+
+    @timelog
+    def foo(*args, **kwargs):
+        ...
+
+    foo(1, bar='baz')  # print a time of foo execution

@@ -1,3 +1,3 @@
-from ._timer import timer
+from ._timer import timer, timelog
 
-__all__ = ('timer')
+__all__ = ('timer', 'timelog')
